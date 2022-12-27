@@ -3,40 +3,20 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
+#include "game.hpp"
 
 class DeviceManager
 {
-    int _width;
-    int _height;
-    int _positionX;
-    int _positionY;
-    SDL_Renderer* _renderer;
-    SDL_Window* _window;
+public:
+    void SetRenderer(SDL_Renderer* renderer);
+    void CleanRenderer(SDL_Renderer* renderer);
+    SDL_Renderer* _renderer = nullptr;
+    SDL_Window *_window = nullptr;
 
-    public:
-    DeviceManager();
-    ~DeviceManager();
-
-    bool CreateWindow(SDL_RendererFlags flag);
-    int GetWidthDevice();
-    void SetWidthDevice(int width);
-
-    int GetHeightDevice();
-    void SetHeightDevice(int height);
-
-    void SetPositionX(int positionX);
-    int GetPositionX();
-
-    void SetPositionY(int positionY);
-    int GetPositionY();
-
-    SDL_Renderer* GetRenderer(SDL_RendererFlags flag);
-    SDL_Window* GetWindow();
-
-    void CleanDevice();
+private:
+    unsigned int _width = 640, _heigth = 480, _positionX = 20, _positionY = 20;
+    const char *_title = "MainWindowDefault";
+    SDL_WindowFlags _windowFlags = SDL_WINDOW_SHOWN;
 };
-
-
-
 
 #endif

@@ -34,6 +34,11 @@ class TimeSpan {
 		_ticks = num * 10000;
 	}
 
+	long GetValue()
+	{
+		return _ticks;
+	}
+
     private:
     long _ticks;
 };

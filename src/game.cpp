@@ -1,63 +1,122 @@
-#include "includes/game.hpp"
-#include "includes/texturemanager.hpp"
 #include <iostream>
+#include <SDL2/SDL.h>
+#include <SDL2_image/SDL_image.h>
+#include "includes/game.hpp"
 #include "includes/devicemanager.hpp"
 
-DeviceManager *deviceManager;
-TextureManager *_textureInstance;
+DeviceManager *deviceManager = nullptr;
+SDL_Texture *player = nullptr;
+SDL_Rect srcRect, destRect;
 
-void Game::Initialize() {}
-
-Game::Game(const char *title, SDL_RendererFlags flag, const unsigned int xPosition, const unsigned int yPosition, const int width, const int height)
+Game::Game()
 {
-    deviceManager = new DeviceManager();
-    deviceManager->SetPositionX(xPosition);
-    deviceManager->SetPositionY(yPosition);
-    deviceManager->SetWidthDevice(width);
-    deviceManager->SetHeightDevice(height);
-    _height = height;
-    _width = width;
-    _positionX = xPosition;
-    _positionY = yPosition;
-    _renderer = deviceManager->GetRenderer(flag);
-    _textureInstance = TextureManager::Instance();
-    _running = true;
+    _game = this;
 }
 
-void Game::Render(GameTime gameTime)
+void Game::Initialize(const char *title, unsigned positionX, unsigned positionY, unsigned width, unsigned height, SDL_WindowFlags windowFlags, SDL_RendererFlags rendererFlags)
 {
-    if (!_textureInstance->Load("assets/mario.jpeg", "empty", _renderer, IMG_INIT_JPG))
+    if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
     {
-        std::cout << "The render texture do not initialized";
-    }
+        std::cout << "SDL_Init successfull " << std::endl;
+        _window = SDL_CreateWindow(title, positionX, positionY, width, height, windowFlags);
 
-    _textureInstance->Draw("empty", _positionX, _positionY, _width, _height, _renderer);
-    SDL_RenderPresent(_renderer);
+        if (_window)
+        {
+            _renderer = SDL_CreateRenderer(_window, 0, rendererFlags);
+
+            if (_renderer)
+            {
+                SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 50);
+                SDL_Surface *tempSurface = IMG_Load("assets/player.png");
+                player = SDL_CreateTextureFromSurface(_renderer, tempSurface);
+                SDL_FreeSurface(tempSurface);
+            }
+            else
+            {
+                std::cout << "Renderer could not be created: " << SDL_GetError() << std::endl;
+            }
+        }
+        else
+        {
+            std::cout << "Window could not be created: " << SDL_GetError() << std::endl;
+        }
+    }
+    else
+    {
+        std::cout << "SDL could not be initialized: " << SDL_GetError() << std::endl;
+    }
 }
 
-void Game::Update(GameTime gameTime) {}
+void Game::LoadContent()
+{
+}
 
-void Game::HandleEvents()
+void Game::UnLoadContent()
+{
+}
+
+void Game::InputHandle()
 {
     SDL_Event event;
-    if (SDL_PollEvent(&event))
+
+    // (1) Handle Input
+    // Start our event loop
+    while (SDL_PollEvent(&event))
     {
-        switch (event.type)
+        // Handle each specific event
+        if (event.type == SDL_QUIT)
         {
-        case SDL_QUIT:
-            _running = false;
-            break;
-        default:
-            break;
+            _isRunning = false;
         }
     }
 }
-void Game::Clean()
+void Game::Update(GameTime *gameTime)
 {
-    std::cout << "Cleaning game components";
-    deviceManager->CleanDevice();
-    delete deviceManager;
-    SDL_Quit();
+    counter++;
+    destRect.h = 64;
+    destRect.w = 64;
+    destRect.x = counter;
+
+    std::cout << "rate fps: " << gameTime->GetTotalGameTime().GetValue() << std::endl;
 }
 
-bool Game::Running() { return _running; }
+void Game::Draw(GameTime *gameTime)
+{
+    SDL_RenderClear(_renderer);
+    SDL_RenderCopy(_renderer, player, NULL, &destRect);
+    SDL_RenderPresent(_renderer);
+}
+
+void Game::Clean()
+{
+    SDL_RenderClear(_renderer);
+    SDL_DestroyRenderer(_renderer);
+    SDL_DestroyWindow(_window);
+    SDL_Quit();
+    std::cout << "All things destroyed and cleaning" << std::endl;
+}
+
+void Game::Run()
+{
+    GameTime *gameTime = new GameTime();
+    Run(gameTime);
+}
+
+void Game::Run(GameTime *gameTime)
+{
+    TimeSpan frameDelay = TimeSpan(1000 / _fps);
+
+    while (_isRunning)
+    {
+        gameTime->SetElapseGameTime(SDL_GetTicks());
+        InputHandle();
+        Update(gameTime);
+        Draw(gameTime);
+        gameTime->SetTotalGameTime(SDL_GetTicks() - gameTime->GetElapseGameTime().GetValue());
+
+        if (frameDelay.GetValue() > gameTime->GetTotalGameTime().GetValue())
+        {
+            SDL_Delay(frameDelay.GetValue() - gameTime->GetTotalGameTime().GetValue());
+        }
+    }
+}

@@ -1,7 +1,7 @@
 #include <iostream>
-#include "includes/texturemanager.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
+#include "includes/texturemanager.hpp"
 
 typedef TextureManager TheTextureManager;
 TextureManager* TextureManager::_instance = 0;
@@ -14,8 +14,8 @@ bool TextureManager::Load(std::string fileName, std::string id, SDL_Renderer* re
         std::cout << "SDL2_Image format not available" << std::endl;
     }
 
-
-    SDL_Surface* tempSurface = IMG_Load(fileName.c_str());
+    const char* fileString = fileName.c_str();
+    SDL_Surface* tempSurface = IMG_Load(fileString);
 
     if(tempSurface == 0)
     {

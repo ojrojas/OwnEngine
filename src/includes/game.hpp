@@ -1,42 +1,30 @@
 #ifndef __Game_H__
 #define __Game_H__
-#include <SDL2/SDL.h>
 #include <iostream>
 #include "gametime.hpp"
+#include "devicemanager.hpp"
 
 class Game
 {
 public:
-    Game(
-        const char *title,
-        SDL_RendererFlags flag,
-        const unsigned int xPosition = 0,
-        const unsigned int yPosition = 0,
-        const int width = 640,
-        const int height = 480);
-    ~Game() {}
-
-    void Initialize();
-    bool Running();
-    void Render(GameTime gameTime);
-    void Update(GameTime gameTime);
-    void HandleEvents();
-    void Clean();
-    void Draw(std::string id, int x, int y, int width, int height, SDL_Renderer *renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
-    void DrawFrame(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer *renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    Game();
+    virtual void Initialize(const char* title, unsigned positionX, unsigned positionY, unsigned width, unsigned height, SDL_WindowFlags windowFlags, SDL_RendererFlags rendererFlags);
+    virtual void LoadContent();
+    virtual void UnLoadContent();
+    virtual void InputHandle();
+    virtual void Update(GameTime *gameTime);
+    virtual void Draw(GameTime *gameTime);
+    virtual void Clean();
+    void Run();
+    void Run(GameTime *GameTime);
 
 private:
-    bool _running;
-    int _height;
-    int _width;
-    int _positionX;
-    int _positionY;
-    GameTime _gameTime;
-    SDL_Window *_window;
-    SDL_Renderer *_renderer;
-    SDL_Texture *_texture;
-    SDL_Rect _sourceRectangle;
-    SDL_Rect _destinationRectangle;
+    bool _isRunning = true;
+    Game* _game = nullptr;
+    SDL_Renderer* _renderer;
+    SDL_Window* _window;
+    long _fps = 60;
+    int counter= 0;
 };
 
 #endif
