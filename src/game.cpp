@@ -3,10 +3,12 @@
 #include <SDL2_image/SDL_image.h>
 #include "includes/game.hpp"
 #include "includes/devicemanager.hpp"
+#include "includes/texturemanager.hpp"
 
 DeviceManager *deviceManager = nullptr;
 SDL_Texture *player = nullptr;
 SDL_Rect srcRect, destRect;
+TextureManager* texturePlayer = TextureManager::Instance();
 
 Game::Game()
 {
@@ -27,9 +29,11 @@ void Game::Initialize(const char *title, unsigned positionX, unsigned positionY,
             if (_renderer)
             {
                 SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 50);
-                SDL_Surface *tempSurface = IMG_Load("assets/player.png");
-                player = SDL_CreateTextureFromSurface(_renderer, tempSurface);
-                SDL_FreeSurface(tempSurface);
+
+                // SDL_Surface *tempSurface = IMG_Load("assets/player.png");
+                texturePlayer->Load("assets/player.png","player",_renderer,IMG_INIT_PNG);
+                // player = SDL_CreateTextureFromSurface(_renderer, tempSurface);
+                // SDL_FreeSurface(tempSurface);
             }
             else
             {
@@ -83,7 +87,8 @@ void Game::Update(GameTime *gameTime)
 void Game::Draw(GameTime *gameTime)
 {
     SDL_RenderClear(_renderer);
-    SDL_RenderCopy(_renderer, player, NULL, &destRect);
+    texturePlayer->Draw("player",counter,0,60,60,_renderer);
+   // SDL_RenderCopy(_renderer, player, NULL, &destRect);
     SDL_RenderPresent(_renderer);
 }
 
