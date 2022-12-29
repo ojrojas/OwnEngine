@@ -8,7 +8,7 @@
 DeviceManager *deviceManager = nullptr;
 SDL_Texture *player = nullptr;
 SDL_Rect srcRect, destRect;
-TextureManager* texturePlayer = TextureManager::Instance();
+TextureManager *textureManager = TextureManager::Instance();
 
 Game::Game()
 {
@@ -17,42 +17,18 @@ Game::Game()
 
 void Game::Initialize(const char *title, unsigned positionX, unsigned positionY, unsigned width, unsigned height, SDL_WindowFlags windowFlags, SDL_RendererFlags rendererFlags)
 {
-    if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
-    {
-        std::cout << "SDL_Init successfull " << std::endl;
-        _window = SDL_CreateWindow(title, positionX, positionY, width, height, windowFlags);
-
-        if (_window)
-        {
-            _renderer = SDL_CreateRenderer(_window, 0, rendererFlags);
-
-            if (_renderer)
-            {
-                SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 50);
-
-                // SDL_Surface *tempSurface = IMG_Load("assets/player.png");
-                texturePlayer->Load("assets/player.png","player",_renderer,IMG_INIT_PNG);
-                // player = SDL_CreateTextureFromSurface(_renderer, tempSurface);
-                // SDL_FreeSurface(tempSurface);
-            }
-            else
-            {
-                std::cout << "Renderer could not be created: " << SDL_GetError() << std::endl;
-            }
-        }
-        else
-        {
-            std::cout << "Window could not be created: " << SDL_GetError() << std::endl;
-        }
-    }
-    else
-    {
-        std::cout << "SDL could not be initialized: " << SDL_GetError() << std::endl;
-    }
+    deviceManager = new DeviceManager();
+    deviceManager->_title ="New WindowName Renderer";
+    deviceManager->_width = 1920;
+    deviceManager->_height = 1080;
+    deviceManager->ApplyChanges();
+    _renderer = deviceManager->_renderer;
+    _window = deviceManager->_window;
 }
 
 void Game::LoadContent()
 {
+    textureManager->Load("assets/player.png", "player", _renderer, IMG_INIT_PNG);
 }
 
 void Game::UnLoadContent()
@@ -87,8 +63,8 @@ void Game::Update(GameTime *gameTime)
 void Game::Draw(GameTime *gameTime)
 {
     SDL_RenderClear(_renderer);
-    texturePlayer->Draw("player",counter,0,60,60,_renderer);
-   // SDL_RenderCopy(_renderer, player, NULL, &destRect);
+    textureManager->Draw("player", counter, 0, 60, 60, _renderer);
+    // SDL_RenderCopy(_renderer, player, NULL, &destRect);
     SDL_RenderPresent(_renderer);
 }
 
@@ -97,6 +73,7 @@ void Game::Clean()
     SDL_RenderClear(_renderer);
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
+    delete deviceManager;
     SDL_Quit();
     std::cout << "All things destroyed and cleaning" << std::endl;
 }
