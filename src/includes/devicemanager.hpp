@@ -17,10 +17,10 @@ public:
     void ApplyChanges();
     unsigned int _width = 640, _height = 480, _positionX = 20, _positionY = 20;
     const char *_title = "MainWindowDefault";
-
-private:
     SDL_WindowFlags _windowFlags = SDL_WINDOW_SHOWN;
     SDL_RendererFlags _rendererFlags = SDL_RENDERER_ACCELERATED;
+
+private:
     void Initialize();
 };
 
