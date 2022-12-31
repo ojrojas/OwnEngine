@@ -15,6 +15,7 @@ public:
     virtual void Update(GameTime *gameTime);
     virtual void Draw(GameTime *gameTime);
     virtual void Clean();
+    void SetFps(long fps);
     void Run();
     void Run(GameTime *GameTime);
 

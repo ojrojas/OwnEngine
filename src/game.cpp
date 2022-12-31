@@ -19,8 +19,6 @@ void Game::Initialize(const char *title, unsigned positionX, unsigned positionY,
 {
     deviceManager = new DeviceManager();
     deviceManager->_title ="New WindowName Renderer";
-    deviceManager->_width = 1920;
-    deviceManager->_height = 1080;
     deviceManager->_windowFlags = SDL_WINDOW_RESIZABLE;
     deviceManager->ApplyChanges();
     _renderer = deviceManager->_renderer;
@@ -29,7 +27,7 @@ void Game::Initialize(const char *title, unsigned positionX, unsigned positionY,
 
 void Game::LoadContent()
 {
-    textureManager->Load("assets/player.png", "player", _renderer, IMG_INIT_PNG);
+    textureManager->Load("assets/smb_mario_sheet.png", "mario", _renderer, IMG_INIT_PNG);
 }
 
 void Game::UnLoadContent()
@@ -64,8 +62,7 @@ void Game::Update(GameTime *gameTime)
 void Game::Draw(GameTime *gameTime)
 {
     SDL_RenderClear(_renderer);
-    textureManager->Draw("player", counter, 0, 60, 60, _renderer);
-    // SDL_RenderCopy(_renderer, player, NULL, &destRect);
+    textureManager->DrawFrame("mario", 211+30, 0, 0, 0, 30,16, _renderer);
     SDL_RenderPresent(_renderer);
 }
 
@@ -77,6 +74,11 @@ void Game::Clean()
     delete deviceManager;
     SDL_Quit();
     std::cout << "All things destroyed and cleaning" << std::endl;
+}
+
+void Game::SetFps(long fps)
+{
+    _fps = fps;
 }
 
 void Game::Run()
@@ -103,3 +105,5 @@ void Game::Run(GameTime *gameTime)
         }
     }
 }
+
+

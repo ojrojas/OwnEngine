@@ -30,7 +30,7 @@ public:
 
     bool Load(std::string fileName, std::string id, SDL_Renderer *renderer, IMG_InitFlags initFlag);
     void Draw(std::string id, int x, int y, int width, int height, SDL_Renderer *renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
-    void DrawFrame(std::string id, int x, int y, int width, int height, int currentRow, int currentFrame, SDL_Renderer *renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    void DrawFrame(std::string id, int sourceX, int sourceY, int destinationX, int destinationY, int width, int height, SDL_Renderer *renderer, SDL_RendererFlip flip = SDL_FLIP_NONE);
     std::map<std::string, SDL_Texture *> _textureMap;
 
 private:
