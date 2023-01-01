@@ -48,17 +48,16 @@ void TextureManager::Draw(std::string id, int x, int y, int width, int height, S
     SDL_RenderCopyEx(renderer, _textureMap[id], &srcRect, &destRect, 0, 0, flip);
 }
 
-void TextureManager::DrawFrame(std::string id, int sourceX, int sourceY, int destinationX, int destinationY, int width, int height, SDL_Renderer *renderer, SDL_RendererFlip flip)
+void TextureManager::DrawFrame(std::string id, SDL_Renderer *renderer, SDL_Rect srcRect, SDL_Rect dstRect, double angle, SDL_Point pointAngle, SDL_RendererFlip flip)
 {
-    SDL_Rect srcRect;
-    SDL_Rect destRect;
+    SDL_RenderCopyEx(renderer, _textureMap[id], &srcRect, &dstRect, 0, 0, flip);
+}
+void TextureManager::BeginRender(SDL_Renderer *renderer)
+{
+    SDL_RenderClear(renderer);
+}
 
-    srcRect.x = sourceX;
-    srcRect.y = sourceY;
-    srcRect.w = destRect.w = width;
-    srcRect.h = destRect.h = height;
-    destRect.x = destinationX;
-    destRect.y = destinationY;
-
-    SDL_RenderCopyEx(renderer, _textureMap[id], &srcRect, &destRect, 0, 0, flip);
+void TextureManager::FinishRender(SDL_Renderer *renderer)
+{
+    SDL_RenderPresent(renderer);
 }
