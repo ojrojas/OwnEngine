@@ -7,7 +7,6 @@
 
 DeviceManager *deviceManager = nullptr;
 SDL_Texture *player = nullptr;
-SDL_Rect srcRect, destRect;
 TextureManager *textureManager = TextureManager::Instance();
 
 Game::Game()
@@ -56,19 +55,15 @@ void Game::InputHandle()
 }
 void Game::Update(GameTime *gameTime)
 {
-    counter++;
-    destRect.h = 64;
-    destRect.w = 64;
-    destRect.x = counter;
-
+    counter--;
     std::cout << "rate fps: " << gameTime->GetTotalGameTime().GetValue() << std::endl;
 }
 
 void Game::Draw(GameTime *gameTime)
 {
     textureManager->BeginRender(_renderer); // most be only one
-    textureManager->Draw("level1",0,0,259,240,_renderer);
-    textureManager->DrawFrame("mario", _renderer, {300, 0, 30, 16}, {x : 200, y : 192, w : 32, h : 16});
+    textureManager->Draw("level1",counter,0,3584,240,_renderer);
+    textureManager->DrawFrame("mario", _renderer, {300, 0, 30, 16}, {x : 80, y : 192, w : 32, h : 16});
     textureManager->FinishRender(_renderer); // most be only one
 }
 

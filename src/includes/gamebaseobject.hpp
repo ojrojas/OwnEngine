@@ -13,6 +13,7 @@ private:
 
 public:
     GameBaseObject();
+    std::function<void()> onEvent;
 
 protected:
     virtual int _width;
