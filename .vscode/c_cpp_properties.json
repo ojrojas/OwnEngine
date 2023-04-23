@@ -4,10 +4,11 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/Library/Frameworks/SDL2.Framework/*",
-                "/Library/Frameworks/SDL2_image.Framework/*",
-                "/Library/Frameworks/SDL2_mixer.Framework/*",
-                "/Library/Frameworks/SDL2_ttf.Framework/*"
+                "/Library/Frameworks/SDL2.Framework/Headers/**",
+                "/Library/Frameworks/SDL2_image.Framework/Headers/**",
+                "/Library/Frameworks/SDL2_ttf.Framework/Headers/**",
+                "/Library/Frameworks/SDL2_mixer.Framework/Headers/**",
+                "/Library/Frameworks/SDL2_mixer.framework/Versions/A/Headers"
             ],
             "defines": [],
             "macFrameworkPath": [

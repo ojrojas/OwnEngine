@@ -12,15 +12,24 @@ class SoundManager
 {
 public:
     
-    static SoundManager *Instance();
-    bool Load(std::string fileName, std::string id, Sound_Type soundType);
+    static SoundManager *Instance()
+    {
+       if(_instance == nullptr)
+       {
+         _instance = new SoundManager();
+         return _instance;
+       }
+       return _instance;
+    }
+    
+    bool Load(std::string fileName, std::string id, Sound_Type soundType, MIX_InitFlags flags);
     void PlaySound(std::string id, int loop);
     void PlayMusic(std::string id, int loop);
 
 private:
     static SoundManager *_instance;
-    std::map<std::string, Mix_Chunk *> _sfxs;
-    std::map<std::string, Mix_Music *> _music;
+    std::map<std::string, Mix_Chunk *> _sfxsMap;
+    std::map<std::string, Mix_Music *> _musicMap;
 
     SoundManager();
     ~SoundManager();

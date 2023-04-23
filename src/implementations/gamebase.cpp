@@ -33,18 +33,7 @@ void GameBase::UnLoadContent()
 
 void GameBase::InputHandle()
 {
-    SDL_Event event;
-
-    // (1) Handle Input
-    // Start our event loop
-    while (SDL_PollEvent(&event))
-    {
-        // Handle each specific event
-        if (event.type == SDL_QUIT)
-        {
-            _isRunning = false;
-        }
-    }
+    
 }
 void GameBase::Update(GameTime *gameTime)
 {
