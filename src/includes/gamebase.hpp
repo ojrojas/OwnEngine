@@ -1,13 +1,15 @@
 #ifndef __Game_H__
 #define __Game_H__
 #include <iostream>
+#include <SDL.h>
+#include <SDL_image.h>
 #include "gametime.hpp"
-#include "devicemanager.hpp"
+#include "devicegraphicmanager.hpp"
 
-class Game
+class GameBase
 {
 public:
-    Game();
+    GameBase();
     virtual void Initialize(const char *title, unsigned positionX, unsigned positionY, unsigned width, unsigned height, SDL_WindowFlags windowFlags, SDL_RendererFlags rendererFlags);
     virtual void LoadContent();
     virtual void UnLoadContent();
@@ -15,17 +17,17 @@ public:
     virtual void Update(GameTime *gameTime);
     virtual void Draw(GameTime *gameTime);
     virtual void Clean();
-    void SetFps(long fps);
+    virtual void SetFps(long fps);
     void Run();
     void Run(GameTime *GameTime);
 
-private:
+protected:
     bool _isRunning = true;
-    Game *_game = nullptr;
+    GameBase *_game = nullptr;
     SDL_Renderer *_renderer;
     SDL_Window *_window;
     long _fps = 60;
-    int counter = 0;
+    DeviceGraphicManager *_deviceManager;
 };
 
 #endif

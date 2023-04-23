@@ -2,14 +2,13 @@
 #define __DEVICEMANAGER_H__
 
 #include <iostream>
-#include <SDL2/SDL.h>
-#include "game.hpp"
+#include <SDL.h>
 
-class DeviceManager
+class DeviceGraphicManager
 {
 public:
-    DeviceManager();
-    ~DeviceManager();
+    DeviceGraphicManager();
+    ~DeviceGraphicManager();
     void SetRenderer(SDL_Renderer* renderer);
     void CleanRenderer(SDL_Renderer* renderer);
     SDL_Renderer* _renderer = nullptr;

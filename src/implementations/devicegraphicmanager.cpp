@@ -1,35 +1,34 @@
 #include <iostream>
-#include <SDL2/SDL.h>
-#include "includes/devicemanager.hpp"
-#include "includes/game.hpp"
+#include <SDL.h>
+#include "../includes/devicegraphicmanager.hpp"
 
-DeviceManager::DeviceManager()
+DeviceGraphicManager::DeviceGraphicManager()
 {
     Initialize();
 }
 
-DeviceManager::~DeviceManager()
+DeviceGraphicManager::~DeviceGraphicManager()
 {
 }
 
-void DeviceManager::SetRenderer(SDL_Renderer *renderer)
+void DeviceGraphicManager::SetRenderer(SDL_Renderer *renderer)
 {
     _renderer = renderer;
 }
 
-void DeviceManager::CleanRenderer(SDL_Renderer *renderer)
+void DeviceGraphicManager::CleanRenderer(SDL_Renderer *renderer)
 {
     _renderer = renderer = nullptr;
 }
 
-void DeviceManager::ApplyChanges()
+void DeviceGraphicManager::ApplyChanges()
 {   
     SDL_DestroyRenderer(_renderer);
     SDL_DestroyWindow(_window);
     Initialize();
 }
 
-void DeviceManager::Initialize()
+void DeviceGraphicManager::Initialize()
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
     {
@@ -59,5 +58,3 @@ void DeviceManager::Initialize()
         std::cout << "SDL could not be initialized: " << SDL_GetError() << std::endl;
     }
 }
-
-

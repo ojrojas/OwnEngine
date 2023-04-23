@@ -2,7 +2,7 @@
 #define __GAMEBASEOBJECT_H__
 
 #include <iostream>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 #include "vector2.hpp"
 
 class GameBaseObject
