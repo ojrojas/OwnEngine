@@ -23,7 +23,6 @@ public:
     void Update(GameTime *gameTime)
     {
         counter--;
-        std::cout << "rate fps: " << gameTime->GetTotalGameTime().GetValue() << std::endl;
     }
 
     void InputHandle()

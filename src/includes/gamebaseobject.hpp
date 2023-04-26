@@ -2,26 +2,28 @@
 #define __GAMEBASEOBJECT_H__
 
 #include <iostream>
-#include <SDL.h>
-#include "vector2.hpp"
+#include <SDL2.h>
 
 class GameBaseObject
 {
 private:
     SDL_Texture *_texture;
     int _zIndex;
+    bool _destroy = false;
 
 public:
     GameBaseObject();
     std::function<void()> onEvent;
+    void Destroy()
+    {
+        _destroy = true;
+    }
 
 protected:
     virtual int _width;
     virtual int height;
-    Vector2 _position;
     virtual void Render(SDL_Renderer *renderer);
-    std::vector<int> _position;
-
+    std::vector<float> _position;
     std::string _textureId;
 };
 

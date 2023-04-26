@@ -5,6 +5,7 @@
 #include <SDL_image.h>
 #include "gametime.hpp"
 #include "devicegraphicmanager.hpp"
+#include "timespan.hpp"
 
 class GameBase
 {
@@ -27,7 +28,11 @@ protected:
     SDL_Renderer *_renderer;
     SDL_Window *_window;
     long _fps = 60;
+    long _previusTick = 0L;
+    TimeSpan _acumulatedElapseTicks;
     DeviceGraphicManager *_deviceManager;
+    TimeSpan frameDelay = TimeSpan(1000L / _fps);
+
 };
 
 #endif

@@ -66,7 +66,6 @@ void GameBase::Run()
 
 void GameBase::Run(GameTime *gameTime)
 {
-    TimeSpan frameDelay = TimeSpan(1000 / _fps);
 
     while (_isRunning)
     {
@@ -78,7 +77,9 @@ void GameBase::Run(GameTime *gameTime)
 
         if (frameDelay.GetValue() > gameTime->GetTotalGameTime().GetValue())
         {
-            SDL_Delay(frameDelay.GetValue() - gameTime->GetTotalGameTime().GetValue());
+            long frameDelayFromFps = frameDelay.GetValue() - gameTime->GetTotalGameTime().GetValue();
+            std::cout << "rate fps: " << gameTime->GetTotalGameTime().GetValue() * _fps << std::endl;
+            SDL_Delay(frameDelayFromFps);
         }
     }
 }

@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <map>
-#include <SDL2_mixer/SDL_mixer.h>
+#include <SDL_mixer.h>
 #include "enums/enumsound.hpp"
 
 using namespace std;
