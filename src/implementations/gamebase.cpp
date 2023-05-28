@@ -10,7 +10,7 @@ GameBase::GameBase()
     _deviceManager = new DeviceGraphicManager();
 }
 
-void GameBase::Initialize(const char *title, unsigned positionX, unsigned positionY, unsigned width, unsigned height, SDL_WindowFlags windowFlags, SDL_RendererFlags rendererFlags)
+void GameBase::Initialize(const char *title, unsigned positionX, unsigned positionY, unsigned width, unsigned height, Uint32 windowFlags, SDL_RendererFlags rendererFlags)
 {
     _deviceManager->_title = "New WindowName Renderer";
     _deviceManager->_windowFlags = windowFlags;

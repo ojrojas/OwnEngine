@@ -1,8 +1,7 @@
 #ifndef __GAMEBASEOBJECT_H__
 #define __GAMEBASEOBJECT_H__
-
+#include <SDL.h>
 #include <iostream>
-#include <SDL2.h>
 
 class GameBaseObject
 {

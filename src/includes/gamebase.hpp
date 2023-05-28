@@ -11,7 +11,7 @@ class GameBase
 {
 public:
     GameBase();
-    virtual void Initialize(const char *title, unsigned positionX, unsigned positionY, unsigned width, unsigned height, SDL_WindowFlags windowFlags, SDL_RendererFlags rendererFlags);
+    virtual void Initialize(const char *title, unsigned positionX, unsigned positionY, unsigned width, unsigned height, Uint32 windowFlags, SDL_RendererFlags rendererFlags);
     virtual void LoadContent();
     virtual void UnLoadContent();
     virtual void InputHandle();
